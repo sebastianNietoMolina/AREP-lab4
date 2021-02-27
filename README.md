@@ -3,7 +3,7 @@
 
 # TALLER DE ARQUITECTURAS DE SERVIDORES DE APLICACIONES, META PROTOCOLOS DE OBJETOS, PATRÓN IOC, REFLEXIÓN
 
-Este proyecto busca implementar un framwork parecido a Srping-Boot, al igual que Spring debe leer la petición get por medio de etiquetas @RequestMapping. Su alcance es explorar la arquitectura de sistemas distribuidos en la red, tiene como objetivo construir un modelo cliente servidor para hacer peticiones http, se debe poder desplegar en heroku, está construido con el patrón de diseño IOC y hace uso de POJO, de igual modo
+Este proyecto busca implementar un framwork parecido a Srping-Boot, al igual que Spring debe leer la petición get por medio de etiquetas @RequestMapping. Su alcance es explorar la arquitectura de sistemas distribuidos en la red, tiene como objetivo construir un modelo cliente servidor para hacer peticiones http, se debe poder desplegar en heroku, está construido con el patrón de diseño IOC y hace uso de POJO, de igual modo puede tener información mas detallada de la arquitectura y la terminologia en el pdf de [Design.pdf](Design.pdf)
 
 ## Comenzando 🚀
 
