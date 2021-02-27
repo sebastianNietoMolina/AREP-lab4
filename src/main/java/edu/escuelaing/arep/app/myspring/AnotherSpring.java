@@ -31,12 +31,22 @@ public class AnotherSpring {
      */
     public AnotherSpring() {}
 
+    /**
+     * Carga los componentes antes de inicar el servidor.
+     * @param components la lista de componentes
+     * @throws ClassNotFoundException
+     */
     public void loadComponent(String[] components) throws ClassNotFoundException {
         for(String compName: components){
             loadComponents(compName);
         }
     }
 
+    /**
+     * Guarda los componentes en un hasmap luego de haber revisado si se instanciaban de RequestMap
+     * @param compName
+     * @throws ClassNotFoundException
+     */
     private void loadComponents(String compName) throws ClassNotFoundException {
         Class component = Class.forName(compName);
         Method[] compMethods = component.getDeclaredMethods();
@@ -96,6 +106,10 @@ public class AnotherSpring {
         return httpNotOk() + "Error";
     }
 
+    /**
+     * Formato preestablecido para error 404 en caso de no encontrar el servcio
+     * @return error 404
+     */
     private String httpNotOk() {
         return "HTTP/1.1 404 not Found\r\n"
                 + "Content-Type: text/html\r\n"
@@ -112,12 +126,21 @@ public class AnotherSpring {
                 + "</html>\n";
     }
 
+    /**
+     * Formato preestablecido para cargar la pagina exitosamente.
+     * @return codigo 200
+     */
     private String httpOk() {
         return "HTTP/1.1 200 OK\r\n"
                 + "Content-Type: text/html\r\n"
                 + "\r\n";
     }
 
+    /**
+     * Carga el archivo js que tenemos.
+     * @return el archivo js
+     * @throws IOException
+     */
     private String js() throws IOException {
         String outputLine;
         File path = new File("src/main/resources/app.js");
@@ -133,6 +156,10 @@ public class AnotherSpring {
         return outputLine;
     }
 
+    /**
+     * Carga una imagen que esta almacenada en internet
+     * @return el formato 200 con la imagen
+     */
     private String doDogs(){
         return "HTTP/1.1 200 OK\r\n"
                 + "Content-Type: text/html\r\n"
@@ -149,6 +176,10 @@ public class AnotherSpring {
                 + "</html>\n";
     }
 
+    /**
+     * Carga una imagen que esta almacenada en internet
+     * @return el formato 200 con la imagen
+     */
     private String doCats(){
         return "HTTP/1.1 200 OK\r\n"
                 + "Content-Type: text/html\r\n"
@@ -165,6 +196,11 @@ public class AnotherSpring {
                 + "</html>\n";
     }
 
+    /**
+     * Carga un archivo css que tenemos en nuestro archivo
+     * @return un archivo css con codigo 200
+     * @throws IOException
+     */
     private String doCss() throws IOException {
         String outputLine;
         File path = new File("src/main/resources/app.css");

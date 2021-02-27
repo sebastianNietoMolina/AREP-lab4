@@ -90,12 +90,12 @@ public class HttpServer {
     }
 
     /**
-     * Verifica
+     * Verifica si el path existe
      * @param inputLine
-     * @return
+     * @param  out
+     * @return respuesta por parte del servidor.
      */
-    public String isValid(String inputLine, PrintWriter out
-    ) throws IOException {
+    public String isValid(String inputLine, PrintWriter out) throws IOException {
         String resp = null;
         String data;
         String[] typeData = inputLine.split(" ");

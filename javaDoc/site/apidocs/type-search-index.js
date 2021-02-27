@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"edu.escuelaing.arep.app.myspring","l":"AnotherSpring"},{"p":"edu.escuelaing.arep.app.myspring","l":"App"},{"p":"edu.escuelaing.arep.app.httpserver","l":"HttpServer"},{"p":"edu.escuelaing.arep.app.annotation","l":"RequestMapping"}]
