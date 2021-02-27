@@ -50,7 +50,7 @@ public class HttpServer {
                     break;
                 }
                 if(fisrtLine) {
-                    resp = watchingDisc(inputLine, out, clientSocket);
+                    resp = isValid(inputLine, out);
                     fisrtLine = false;
                 }
             }
@@ -91,52 +91,20 @@ public class HttpServer {
     }
 
     /**
-     * Revisa en el path enviado, si la información la tiene en disco.
-     * @param inputLine
-     * @param out
-     * @return una imprensin en pantalla dependiendo del formato pedido.
-     */
-    public String watchingDisc(String inputLine, PrintWriter out, Socket os) throws IOException {
-
-        boolean flag = true;
-        String data = null;
-
-        if (inputLine.contains("GET")){
-            String[] typeData = inputLine.split(" ");
-            data = typeData[1];
-            if(data.equals("/hello.html")){
-                doHello(out);
-                flag = false;
-            }else if(data.equals("/dogs.jpg") || data.equals("/dogs.JPG")){
-                doDogs(out);
-                flag = false;
-            }else if(data.contains("/cats.png") || data.contains("/cats.PNG")){
-                doCats(out);
-                flag = false;
-            }else if(data.contains("/show.css")){
-                doCss(os);
-                flag = false;
-            }else if(data.contains("/show.js")){
-                doJs(out);
-                flag = false;
-            }else if(data.equals("/")){
-                readIndex(out);
-            }
-        }
-
-        return isValid(data, flag);
-    }
-
-    /**
      * Verifica
-     * @param data
-     * @param flag
+     * @param inputLine
      * @return
      */
-    public String isValid(String data, boolean flag){
+    public String isValid(String inputLine, PrintWriter out
+    ) throws IOException {
         String resp = null;
-
-        if(flag && data!=null){
+        String data;
+        String[] typeData = inputLine.split(" ");
+        data = typeData[1];
+        if(data.equals("/")){
+            readIndex(out);
+        }
+        else{
             for (String key: routes.keySet() ){
                 if(data.startsWith(key) ){
                     String newPath = data.substring(key.length());
@@ -161,118 +129,6 @@ public class HttpServer {
      */
     public void setAlive(boolean alive) {
         isAlive = alive;
-    }
-
-    /**
-     * html estático que está contenido en disco.
-     * @param out
-     */
-    public void doHello(PrintWriter out){
-        String outputLine;
-        outputLine = "HTTP/1.1 200 OK\r\n"
-                + "Content-Type: text/html\r\n"
-                + "\r\n"
-                + "<!DOCTYPE html>\n"
-                + "<html>\n"
-                + "<head>\n"
-                + "<meta charset=\"UTF-8\">\n"
-                + "<title>Hello!!!</title>\n"
-                + "</head>\n"
-                + "<body>\n"
-                + "<h1>Very good days!</h1>\n"
-                + "</body>\n"
-                + "</html>\n";
-        out.println(outputLine);
-        out.close();
-    }
-
-    /**
-     * html estático que nos devuelve una imagen de perros
-     * @param out
-     */
-    public void doDogs(PrintWriter out){
-        String outputLine;
-        outputLine = "HTTP/1.1 200 OK\r\n"
-                + "Content-Type: text/html\r\n"
-                + "\r\n"
-                + "<!DOCTYPE html>\n"
-                + "<html>\n"
-                + "<head>\n"
-                + "<meta charset=\"UTF-8\">\n"
-                + "<title>Dogs!!</title>\n"
-                + "</head>\n"
-                + "<body>\n"
-                + "<img src=\"https://www.happets.com/blog/wp-content/uploads/2019/08/ventajas-de-un-dispensador-de-comida-para-perros.jpg\" />\n"
-                + "</body>\n"
-                + "</html>\n";
-        out.println(outputLine);
-        out.close();
-    }
-
-    /**
-     * html estático que nos devuelve una imagen de gatos.
-     * @param out
-     */
-    public void doCats(PrintWriter out){
-        String outputLine;
-        outputLine = "HTTP/1.1 200 OK\r\n"
-                + "Content-Type: text/html\r\n"
-                + "\r\n"
-                + "<!DOCTYPE html>\n"
-                + "<html>\n"
-                + "<head>\n"
-                + "<meta charset=\"UTF-8\">\n"
-                + "<title>Title of the document</title>\n"
-                + "</head>\n"
-                + "<body>\n"
-                + "<img src=\"https://www.pngkey.com/png/detail/909-9090660_adopt-cat-imagens-de-gatos-png.png\" />\n"
-                + "</body>\n"
-                + "</html>\n";
-        out.println(outputLine);
-        out.close();
-    }
-
-    /**
-     * Fragmento de código css.
-     * @param socket del cliente para poder mostrar los datos en pantalla.
-     * @throws IOException
-     */
-    public void doCss(Socket socket) throws IOException {
-        PrintWriter response = new PrintWriter(socket.getOutputStream(), true);
-        response.println("HTTP/1.1 200 OK");
-        response.println("Content-Type: text/css" + "\r\n");
-        response.println(".rentContainer {" + "\r\n");
-        response.println("display: grid;"+ "\r\n");
-        response.println("grid-template-columns: 50% 50%;"+ "\r\n");
-        response.println("grid-auto-rows:200px;"+ "\r\n");
-        response.println("margin: 3%;"+ "\r\n");
-        response.println("background-color: rgba(56, 56, 56, 0.048) "+ "\r\n");
-        response.println("}" + "\r\n");
-        response.flush();
-        response.close();
-    }
-
-    /**
-     * Busca en el path de archivos .js, y muestra uno en pantalla.
-     * @param out para poder imprimir en pantalla el archivo .js sin necesidad de usar el socket client
-     * @throws IOException
-     */
-    public void doJs(PrintWriter out) throws IOException {
-        String outputLine;
-
-        File path = new File("src/main/resources/app.js");
-        FileReader fileReader = new FileReader(path);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        outputLine = "HTTP/1.1 200 OK\r\n"
-                + "Content-Type: text/javascript  \r\n"
-                + "\r\n";
-        String inputLine;
-        while ((inputLine=bufferedReader.readLine()) != null){
-            outputLine += inputLine + "\n";
-        }
-        System.out.println(outputLine);
-        out.println(outputLine);
-        out.close();
     }
 
     /**
